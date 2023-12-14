@@ -14,6 +14,7 @@ class board:
             x_ord = letters[square[0]] * 75 - 350
             y_ord = int(square[1]) * 75 - 350
             self.squares.update({square: {'piece': 'empty', 'co_ordinates': (x_ord, y_ord)}})
+            
 
         # creates a dictionary with all the squares containing a piece value and coordinate value
         self.pen = Turtle(shape='square')

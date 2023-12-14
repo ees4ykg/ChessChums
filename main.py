@@ -13,6 +13,7 @@ from turtle import Screen
 
 chessboard = board()
 screen = Screen()
+screen.addshape()
 print(chessboard.squares)
 
 screen.exitonclick()
