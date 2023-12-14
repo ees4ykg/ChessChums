@@ -13,12 +13,12 @@ from turtle import Screen
 
 parts = ['king', 'queen', 'rook', 'bishop', 'knight', 'pawn']
 screen = Screen()
-screen.addshape('darkseagreen1.gif')
-screen.addshape('darkslategrey.gif')
+screen.addshape('images/darkseagreen1.gif')
+screen.addshape('images/darkslategrey.gif')
 
 for part in parts:
-    screen.addshape(f'b_{part}_1x_ns.gif')
-    screen.addshape(f'w_{part}_1x_ns.gif')
+    screen.addshape(f'images/b_{part}_1x_ns.gif')
+    screen.addshape(f'images/w_{part}_1x_ns.gif')
 
 screen.tracer(0, 0)
 
