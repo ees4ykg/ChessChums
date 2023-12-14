@@ -8,3 +8,4 @@ print(sqrs)
 class board:
     def __init__(self):
         self.squares = {}
+#aaah
