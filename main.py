@@ -10,10 +10,15 @@
 
 from Board import board
 from turtle import Screen
+screen = Screen()
+screen.addshape('darkseagreen1.gif')
+screen.addshape('darkslategrey.gif')
+screen.tracer(0, 0)
 
 chessboard = board()
-screen = Screen()
-screen.addshape()
-print(chessboard.squares)
 
-screen.exitonclick()
+print(chessboard.squares)
+print(chessboard.squares['a1']['co_ordinates'])
+print(chessboard.squares['a2']['co_ordinates'])
+screen.update()
+screen.mainloop()
