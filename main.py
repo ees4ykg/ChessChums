@@ -10,9 +10,16 @@
 
 from Board import board
 from turtle import Screen
+
+parts = ['king', 'queen', 'rook', 'bishop', 'knight', 'pawn']
 screen = Screen()
 screen.addshape('darkseagreen1.gif')
 screen.addshape('darkslategrey.gif')
+
+for part in parts:
+    screen.addshape(f'b_{part}_1x_ns.gif')
+    screen.addshape(f'w_{part}_1x_ns.gif')
+
 screen.tracer(0, 0)
 
 chessboard = board()
