@@ -1,11 +1,19 @@
 import turtle
 letters = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h']
-sqrs = []
-for n in range(1,9):
-    for letter in letters:
-        sqrs.append(letter+str(n))
-print(sqrs)
+sqrs = ['a1', 'b1', 'c1', 'd1', 'e1', 'f1', 'g1', 'h1', 'a2', 'b2', 'c2', 'd2', 'e2', 'f2', 'g2', 'h2', 'a3', 'b3',
+        'c3', 'd3', 'e3', 'f3', 'g3', 'h3', 'a4', 'b4', 'c4', 'd4', 'e4', 'f4', 'g4', 'h4', 'a5', 'b5', 'c5', 'd5',
+        'e5', 'f5', 'g5', 'h5', 'a6', 'b6', 'c6', 'd6', 'e6', 'f6', 'g6', 'h6', 'a7', 'b7', 'c7', 'd7', 'e7', 'f7',
+        'g7', 'h7', 'a8', 'b8', 'c8', 'd8', 'e8', 'f8', 'g8', 'h8']
 class board:
     def __init__(self):
         self.squares = {}
-#aaah
+        for square in sqrs:
+            self.squares.update({square: {'piece': 'empty', 'co_ordinates': [0, 0]}})
+
+
+chessboard = board()
+
+print(chessboard.squares)
+
+chessboard.squares['a1': {'piece'}] = 'bishop'
+print(chessboard.squares)
