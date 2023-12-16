@@ -7,9 +7,9 @@
 # other micelanous rules such as queening and castling and en passent:
 
 # bismillah allahu akbar
-
+import numpy as np
 import time
-from Board import board
+from Board import Board
 from pieces import *
 from turtle import Screen
 
@@ -23,16 +23,23 @@ for part in parts:
     screen.addshape(f'images/w_{part}_1x_ns.gif')
 
 screen.tracer(0, 0)
-chessboard = board()
+chessboard = Board()
 w_pawn = Pawn(colour="w", co_ords=chessboard.squares["a2"]["co_ordinates"])
 
 
 screen.update()
-print(chessboard.squares['d4'], chessboard.squares['e5'])
-time.sleep(5)
+
+time.sleep(1)
 w_pawn.movement()
+
 screen.update()
-time.sleep(2)
-w_pawn.capture("right")
+
+time.sleep(1)
+w_pawn.capture("left")
+
 screen.update()
+print(chessboard.squares)
+chessboard.flip()
+print(chessboard.squares)
+
 screen.mainloop()

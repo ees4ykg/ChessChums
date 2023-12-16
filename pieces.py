@@ -17,15 +17,14 @@ class Pawn(Turtle):
         #check if pieces are diagional
         #if they are, delete that piece and move to its location
         if direction == "left":
-            new_x = self.pos() - 75
-            new_y = self.pos() + 75
+            new_x = self.xcor() - 75
+            new_y = self.ycor() + 75
             self.setpos(new_x, new_y)
 
         elif direction == "right":
-            new_x = self.pos()[0] + 75
-            new_y = self.pos()[1] + 75
+            new_x = self.xcor() + 75
+            new_y = self.ycor() + 75
             self.setpos(new_x, new_y)
-
 
 
 

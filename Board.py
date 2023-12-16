@@ -14,7 +14,7 @@ rotate_matrix = np.array([[-1, 0, 0 ], [0, -1, 0], [0, 0, 1]])
 translate_inverse_matrix = np.array([[1, 0, -12.5], [0, 1, -12.5], [0, 0, 1]])
 
 
-class board:
+class Board:
     def __init__(self):
         p = 1
         n = 0
@@ -30,8 +30,8 @@ class board:
             if (p % 8) - 1 == 0:
                 n += 1
 
-#    def flip(self):
-#         for square in self.squares:
-#             translate_matrix = np.array([[1, 0, 12.5], [0, 1, 12.5], [0, 0, 1]])
-#             rotate_matrix = np.array([[-1, 0, 0 ], [0, -1, 0], [0, 0, 1]])
-#             translate_inverse_matrix = np.array([[1, 0, -12.5], [0, 1, -12.5], [0, 0, 1]])
+    def flip(self):
+        for square in self.squares.values():
+            co_ordinates_matrix = np.matrix([[square['co_ordinates'][0]], [square['co_ordinates'][1]], [1]])
+            new_co_ordinates_matrix = translate_inverse_matrix.dot(rotate_matrix.dot(translate_matrix.dot(co_ordinates_matrix)))
+            square['co_ordinates'] = (int(new_co_ordinates_matrix[0][0]), int(new_co_ordinates_matrix[1][0]))
