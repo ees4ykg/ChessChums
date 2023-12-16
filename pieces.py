@@ -1,6 +1,19 @@
-from turtle import Turtle
+from turtle import Turtle,Screen
 
-class pawn:
-    def __init__(self):
+num = {"w": 75, "b": -75}
+class pawn(Turtle):
+    def __init__(self,colour,co_ords):
+        self.colour = colour
+        self.shape(f"images/{colour}_pawn_1x_ns.gif")
+        self.setpos(co_ords)
+
+    def Movement(self, ):
+        new_x = self.pos()[0]
+        new_y = self.pos()[1] + num[self.colour]
+        self.setpos(new_x, new_y)
+
+
+
+
 
 

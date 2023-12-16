@@ -10,6 +10,7 @@
 
 from Board import board
 from turtle import Screen
+from pieces import *
 
 parts = ['king', 'queen', 'rook', 'bishop', 'knight', 'pawn']
 screen = Screen()
@@ -20,9 +21,11 @@ for part in parts:
     screen.addshape(f'images/b_{part}_1x_ns.gif')
     screen.addshape(f'images/w_{part}_1x_ns.gif')
 
+
 screen.tracer(0, 0)
 
 chessboard = board()
+w_pawn = pawn(colour="w",co_ords= chessboard.squares["a2"]["co_ordinates"])
 
 print(chessboard.squares)
 print(chessboard.squares['a1']['co_ordinates'])
