@@ -8,9 +8,10 @@
 
 # bismillah allahu akbar
 
+import time
 from Board import board
-from turtle import Screen
 from pieces import *
+from turtle import Screen
 
 parts = ['king', 'queen', 'rook', 'bishop', 'knight', 'pawn']
 screen = Screen()
@@ -21,15 +22,13 @@ for part in parts:
     screen.addshape(f'images/b_{part}_1x_ns.gif')
     screen.addshape(f'images/w_{part}_1x_ns.gif')
 
-
 screen.tracer(0, 0)
-
 chessboard = board()
-w_pawn = pawn(colour="w",co_ords= chessboard.squares["a2"]["co_ordinates"])
+w_pawn = Pawn(colour="w", co_ords=chessboard.squares["a2"]["co_ordinates"])
 
-print(chessboard.squares)
-print(chessboard.squares['a1']['co_ordinates'])
-print(chessboard.squares['a2']['co_ordinates'])
+
+screen.update()
+time.sleep(5)
+w_pawn.Movement()
 screen.update()
 screen.mainloop()
-
