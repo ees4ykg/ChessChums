@@ -29,3 +29,4 @@ print(chessboard.squares['a1']['co_ordinates'])
 print(chessboard.squares['a2']['co_ordinates'])
 screen.update()
 screen.mainloop()
+
