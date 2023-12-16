@@ -28,6 +28,7 @@ w_pawn = Pawn(colour="w", co_ords=chessboard.squares["a2"]["co_ordinates"])
 
 
 screen.update()
+print(chessboard.squares['d4'], chessboard.squares['e5'])
 time.sleep(5)
 w_pawn.Movement()
 screen.update()

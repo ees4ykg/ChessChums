@@ -1,4 +1,5 @@
 from turtle import Turtle, Screen
+import numpy as np
 
 letters = {'a': 1, 'b': 2, 'c': 3, 'd': 4, 'e': 5, 'f': 6, 'g': 7, 'h': 8}
 sqrs = ['a1', 'b1', 'c1', 'd1', 'e1', 'f1', 'g1', 'h1', 'a2', 'b2', 'c2', 'd2', 'e2', 'f2', 'g2', 'h2', 'a3', 'b3',
@@ -6,6 +7,12 @@ sqrs = ['a1', 'b1', 'c1', 'd1', 'e1', 'f1', 'g1', 'h1', 'a2', 'b2', 'c2', 'd2', 
         'e5', 'f5', 'g5', 'h5', 'a6', 'b6', 'c6', 'd6', 'e6', 'f6', 'g6', 'h6', 'a7', 'b7', 'c7', 'd7', 'e7', 'f7',
         'g7', 'h7', 'a8', 'b8', 'c8', 'd8', 'e8', 'f8', 'g8', 'h8']
 board_colours = ['images/darkseagreen1.gif', 'images/darkslategrey.gif']
+
+
+translate_matrix = np.array([[1, 0, 12.5], [0, 1, 12.5], [0, 0, 1]])
+rotate_matrix = np.array([[-1, 0, 0 ], [0, -1, 0], [0, 0, 1]])
+translate_inverse_matrix = np.array([[1, 0, -12.5], [0, 1, -12.5], [0, 0, 1]])
+
 
 class board:
     def __init__(self):
@@ -22,3 +29,9 @@ class board:
             p += 1
             if (p % 8) - 1 == 0:
                 n += 1
+
+   def flip(self):
+        for square in self.squares:
+            translate_matrix = np.array([[1, 0, 12.5], [0, 1, 12.5], [0, 0, 1]])
+            rotate_matrix = np.array([[-1, 0, 0 ], [0, -1, 0], [0, 0, 1]])
+            translate_inverse_matrix = np.array([[1, 0, -12.5], [0, 1, -12.5], [0, 0, 1]])
