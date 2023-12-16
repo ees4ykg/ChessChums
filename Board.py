@@ -30,8 +30,8 @@ class board:
             if (p % 8) - 1 == 0:
                 n += 1
 
-   def flip(self):
-        for square in self.squares:
-            translate_matrix = np.array([[1, 0, 12.5], [0, 1, 12.5], [0, 0, 1]])
-            rotate_matrix = np.array([[-1, 0, 0 ], [0, -1, 0], [0, 0, 1]])
-            translate_inverse_matrix = np.array([[1, 0, -12.5], [0, 1, -12.5], [0, 0, 1]])
+#    def flip(self):
+#         for square in self.squares:
+#             translate_matrix = np.array([[1, 0, 12.5], [0, 1, 12.5], [0, 0, 1]])
+#             rotate_matrix = np.array([[-1, 0, 0 ], [0, -1, 0], [0, 0, 1]])
+#             translate_inverse_matrix = np.array([[1, 0, -12.5], [0, 1, -12.5], [0, 0, 1]])
