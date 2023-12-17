@@ -35,7 +35,7 @@ w_pawn.movement()
 screen.update()
 
 time.sleep(1)
-w_pawn.capture("left")
+w_pawn.capture("right")
 
 screen.update()
 print(chessboard.squares)
