@@ -52,4 +52,21 @@ w_pawn.onclick(lambda x, y: display_options(w_pawn))
 
 screen.update()
 
+<<<<<<< HEAD
 screen.mainloop()
+=======
+time.sleep(1)
+w_pawn.movement()
+
+screen.update()
+
+time.sleep(1)
+w_pawn.capture("right")
+
+screen.update()
+print(chessboard.squares)
+chessboard.flip()
+print(chessboard.squares)
+
+screen.mainloop()
+>>>>>>> f62d8293b98dbbf20caf0f9d0d476612f80135c6
