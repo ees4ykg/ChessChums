@@ -42,7 +42,7 @@ chessboard = Board()
 w_pawn = Pawn(colour="w", opposite_colour='b', co_ords=chessboard.squares["d2"]["co_ordinates"], board=chessboard)
 b_pawn1 = Pawn(colour="b", opposite_colour='w', co_ords=chessboard.squares["e3"]["co_ordinates"], board=chessboard)
 b_pawn2 = Pawn(colour="b", opposite_colour='w', co_ords=chessboard.squares["c3"]["co_ordinates"], board=chessboard)
-
+w_rook1 = Rook(colour="w", opposite_colour="b",co_ords= chessboard.squares["a1"]["co_ordinates"], board=chessboard)
 w_pawn.vision_update(board=chessboard)
 
 screen.update()

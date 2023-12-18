@@ -38,6 +38,12 @@ squares_reversed_b = {'(250, 250)': 'a1', '(175, 250)': 'b1', '(100, 250)': 'c1'
 
 parts = ['king', 'queen', 'rook', 'bishop', 'knight', 'pawn']
 
+def set_square_piece(board,colour,co_ords,piece):
+    if not board.reversed:  # if it is a white pawn
+            board.squares[squares_reversed_w[str(co_ords)]]['piece'] = f'{colour}_{piece}' #adds the pawn to the square
+    elif board.reversed:  # if it is a black pawn
+        board.squares[squares_reversed_b[str(co_ords)]['piece']] = f'{colour}_{piece}'
+
 
 class Pawn(Turtle):
     def __init__(self, colour, opposite_colour, co_ords, board):
@@ -52,11 +58,7 @@ class Pawn(Turtle):
         self.capture_vision = []
         self.has_moved = False
 
-        if not board.reversed:  # if it is a white pawn
-            print(board.squares[squares_reversed_w[str(co_ords)]])
-            board.squares[squares_reversed_w[str(co_ords)]]['piece'] = f'{colour}_pawn'
-        elif board.reversed:  # if it is a black pawn
-            board.squares[squares_reversed_b[str(co_ords)]['piece']] = f'{colour}_pawn'
+        set_square_piece(board,colour,co_ords,"pawn")
 
     def movement(self):
         new_x = self.pos()[0]
@@ -101,3 +103,44 @@ class Pawn(Turtle):
                 for part in parts:  # adds square to capture_vision array if enemy piece is present on that square
                     if square['piece'] == f'{self.opposite_colour}_{part}':
                         self.capture_vision.append((self.xcor() + 75, self.ycor() + 75))
+
+
+class Rook(Turtle):
+    def __init__(self, colour,opposite_colour,co_ords, board):
+        super().__init__()
+
+        self.penup()
+        self.colour = colour
+        self.opposite_colour = opposite_colour
+        self.shape(f"images/{colour}_rook_1x_ns.gif")
+        self.setpos(co_ords)
+        self.vision = []
+        self.capture_vision = []
+        self.has_moved = False
+
+        set_square_piece(board,colour,co_ords,"rook")
+
+        def vision_update(self):
+            self.vision = []
+
+            for square in board.squares:
+                #for every square which leter is the same as the letter that the rook is on
+                if square[0] == squares_reversed_w[self.pos][0]:
+                    if board.square[square]["piece"] != "empty":
+                        break
+                    self.vision.append(board.square[square]["co_ordinates"])
+
+                #for every square which leter is the same as the number that the rook is on
+                elif square[1] == squares_reversed_w[self.pos][1]:
+                    if board.square[square]["piece"] != "empty":
+                        break
+                    self.vision.append(board.square[square]["co_ordinates"])
+
+
+
+
+
+            
+
+
+
