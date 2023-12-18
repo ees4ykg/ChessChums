@@ -120,21 +120,22 @@ class Rook(Turtle):
 
         set_square_piece(board,colour,co_ords,"rook")
 
-        def vision_update(self):
-            self.vision = []
+    def vision_update(self, board):
+        self.vision = []
 
-            for square in board.squares:
-                #for every square which leter is the same as the letter that the rook is on
-                if square[0] == squares_reversed_w[self.pos][0]:
-                    if board.square[square]["piece"] != "empty":
-                        break
-                    self.vision.append(board.square[square]["co_ordinates"])
+        for square in board.squares:
+            #for every square which leter is the same as the letter that the rook is on
+            #print(str(self.pos))
+            if square[0] == squares_reversed_w[str(self.pos)][0]:
+                if board.square[square]["piece"] != "empty":
+                    break
+                self.vision.append(board.square[square]["co_ordinates"])
 
-                #for every square which leter is the same as the number that the rook is on
-                elif square[1] == squares_reversed_w[self.pos][1]:
-                    if board.square[square]["piece"] != "empty":
-                        break
-                    self.vision.append(board.square[square]["co_ordinates"])
+            #for every square which leter is the same as the number that the rook is on
+            elif square[1] == squares_reversed_w[str(self.pos)][1]:
+                if board.square[square]["piece"] != "empty":
+                    break
+                self.vision.append(board.square[square]["co_ordinates"])
 
 
 

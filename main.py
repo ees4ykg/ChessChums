@@ -47,12 +47,8 @@ w_pawn.vision_update(board=chessboard)
 
 screen.update()
 
-print(chessboard.squares['a4']['piece'])
-
-print(chessboard.squares['d2']['piece'])
-
-print(chessboard.squares['c3']['piece'])
-w_pawn.onclick(lambda x, y: display_options(w_pawn))
+w_rook1.vision_update(board=chessboard)
+w_rook1.onclick(lambda x, y: display_options(w_rook1))
 
 
 screen.update()
