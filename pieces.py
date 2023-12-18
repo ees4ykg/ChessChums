@@ -85,7 +85,7 @@ class Pawn(Turtle):
                 if square['piece'] == 'empty':  # adds first square pawn can move to
                     self.vision.append((self.xcor(), self.ycor() + 75))
 
-            if not self.has_moved and square['co_ordinates'] == (self.xcor(), self.ycor() + 75):
+            elif not self.has_moved and square['co_ordinates'] == (self.xcor(), self.ycor() + 150):
                 if square['piece'] == 'empty':  # adds second square to vision array if pawn has not moved yet
                     self.vision.append((self.xcor(), self.ycor() + 150))
 
@@ -97,8 +97,7 @@ class Pawn(Turtle):
                     if square['piece'] == f'{self.opposite_colour}_{part}':
                         self.capture_vision.append((self.xcor() - 75, self.ycor() + 75))
 
-            if square['co_ordinates'] == (self.xcor() + 75, self.ycor() + 75):
+            elif square['co_ordinates'] == (self.xcor() + 75, self.ycor() + 75):
                 for part in parts:  # adds square to capture_vision array if enemy piece is present on that square
                     if square['piece'] == f'{self.opposite_colour}_{part}':
                         self.capture_vision.append((self.xcor() + 75, self.ycor() + 75))
-        print(self.capture_vision)
