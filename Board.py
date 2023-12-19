@@ -66,12 +66,18 @@ class Board:
             p += 1
             if (p % 8) - 1 == 0:
                 n += 1
-        self.reversed = False
+        self.squares_reversed = squares_reversed_w
 
     def flip(self):
-        self.reversed = not self.reversed
+
         for square in self.squares.values():
             co_ordinates_matrix = np.matrix([[square['co_ordinates'][0]], [square['co_ordinates'][1]], [1]])
             new_co_ordinates_matrix = translate_inverse_matrix.dot(
                 rotate_matrix.dot(translate_matrix.dot(co_ordinates_matrix)))
             square['co_ordinates'] = (int(new_co_ordinates_matrix[0][0]), int(new_co_ordinates_matrix[1][0]))
+
+        if self.squares_reversed == squares_reversed_w:
+            self.squares_reversed = squares_reversed_b
+
+        elif self.squares_reversed == squares_reversed_b:
+            self.squares_reversed = squares_reversed_w
