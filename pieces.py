@@ -1,4 +1,4 @@
-from turtle import Turtle, Screen
+from turtle import Turtle
 
 
 parts = ['king', 'queen', 'rook', 'bishop', 'knight', 'pawn']
@@ -6,8 +6,8 @@ parts = ['king', 'queen', 'rook', 'bishop', 'knight', 'pawn']
 
 def set_square_piece(board, colour, co_ords, piece):
     if not board.reversed:  # if it is a white pawn
-        board.squares[board.squares_reversed[str(co_ords)]]['piece'] = f'{colour}_{piece}'  # adds the pawn to the square
-    elif board.reversed:  # if it is a black pawn
+        board.squares[board.squares_reversed[str(co_ords)]]['piece'] = f'{colour}_{piece}'
+    elif board.reversed:  # if it is a black pawn it adds the pawn to the square
         board.squares[board.squares_reversed[str(co_ords)]]['piece'] = f'{colour}_{piece}'
 
 
@@ -32,7 +32,7 @@ class Pawn(Turtle):
         self.setpos(new_x, new_y)
 
     def capture(self, direction):
-        # check if pieces are diagional
+        # check if pieces are diagonal
         # if they are, delete that piece and move to its location
         if direction == "left":
             new_x = self.xcor() - 75
