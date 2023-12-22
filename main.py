@@ -50,25 +50,19 @@ screen.tracer(0, 0)
 
 chessboard = Board()
 
-w_pawn1 = Pawn(colour="w", co_ords=chessboard.squares["d2"]["co_ordinates"], board=chessboard)
-w_pawn2 = Pawn(colour="w", co_ords=chessboard.squares["d7"]["co_ordinates"], board=chessboard)
-b_pawn1 = Pawn(colour="b", co_ords=chessboard.squares["a2"]["co_ordinates"], board=chessboard)
-b_pawn2 = Pawn(colour="b", co_ords=chessboard.squares["c3"]["co_ordinates"], board=chessboard)
-b_pawn3 = Pawn(colour="b", co_ords=chessboard.squares["f4"]["co_ordinates"], board=chessboard)
-w_rook1 = Rook(colour="w", co_ords=chessboard.squares["c4"]["co_ordinates"], board=chessboard)
-w_bishop1 = Bishop(colour="w", co_ords=chessboard.squares["e5"]["co_ordinates"], board=chessboard)
-w_queen = Queen(colour="w", co_ords=chessboard.squares["f7"]["co_ordinates"], board=chessboard)
-w_knight1 = Knight(colour="w", co_ords=chessboard.squares["d6"]["co_ordinates"], board=chessboard)
-w_king = King(colour="w", co_ords=chessboard.squares["c2"]["co_ordinates"], board=chessboard)
+white_set = create_piece_set(chessboard, 'w')
+black_set = create_piece_set(chessboard, 'b')
+
+
 
 screen.update()
 
-w_rook1.onclick(lambda x, y: display_options(w_rook1))
-w_pawn1.onclick(lambda x, y: display_options(w_pawn1))
-w_bishop1.onclick(lambda x, y: display_options(w_bishop1))
-w_queen.onclick(lambda x, y: display_options(w_queen))
-w_knight1.onclick(lambda x, y: display_options(w_knight1))
-w_king.onclick(lambda x, y: display_options(w_king))
+# w_rook1.onclick(lambda x, y: display_options(w_rook1))
+# w_pawn1.onclick(lambda x, y: display_options(w_pawn1))
+# w_bishop1.onclick(lambda x, y: display_options(w_bishop1))
+# w_queen.onclick(lambda x, y: display_options(w_queen))
+# w_knight1.onclick(lambda x, y: display_options(w_knight1))
+# w_king.onclick(lambda x, y: display_options(w_king))
 
 screen.update()
 screen.mainloop()

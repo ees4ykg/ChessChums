@@ -2,6 +2,7 @@ import ftplib
 from turtle import Turtle
 
 parts = ['king', 'queen', 'rook', 'bishop', 'knight', 'pawn']
+letters = {'a': 1, 'b': 2, 'c': 3, 'd': 4, 'e': 5, 'f': 6, 'g': 7, 'h': 8}
 
 
 def set_square_piece(board, colour, co_ords, name):
@@ -169,3 +170,35 @@ class King(Turtle):
     def vision_update(self, board):
         directions = [(1, 1), (-1, -1), (1, -1), (-1, 1), (1, 0), (-1, 0), (0, 1), (0, -1)]
         vision_update_loop(self, board, directions, False)
+
+
+def create_piece_set(board, colour):
+    piece_set = []
+
+    if colour == 'w':
+        for letter in letters.keys():
+            piece_set.append(Pawn(colour="w", co_ords=board.squares[letter + "2"]["co_ordinates"], board=board))
+
+        piece_set.append(Knight(colour='w', co_ords=board.squares['b1']['co_ordinates'], board=board))
+        piece_set.append(Knight(colour='w', co_ords=board.squares['g1']['co_ordinates'], board=board))
+        piece_set.append(Bishop(colour='w', co_ords=board.squares['c1']['co_ordinates'], board=board))
+        piece_set.append(Bishop(colour='w', co_ords=board.squares['f1']['co_ordinates'], board=board))
+        piece_set.append(Rook(colour='w', co_ords=board.squares['a1']['co_ordinates'], board=board))
+        piece_set.append(Rook(colour='w', co_ords=board.squares['h1']['co_ordinates'], board=board))
+        piece_set.append(Queen(colour='w', co_ords=board.squares['d1']['co_ordinates'], board=board))
+        piece_set.append(King(colour='w', co_ords=board.squares['e1']['co_ordinates'], board=board))
+
+    elif colour == 'b':
+        for letter in letters.keys():
+            piece_set.append(Pawn(colour="b", co_ords=board.squares[letter + "7"]["co_ordinates"], board=board))
+
+        piece_set.append(Knight(colour='b', co_ords=board.squares['b8']['co_ordinates'], board=board))
+        piece_set.append(Knight(colour='b', co_ords=board.squares['g8']['co_ordinates'], board=board))
+        piece_set.append(Bishop(colour='b', co_ords=board.squares['c8']['co_ordinates'], board=board))
+        piece_set.append(Bishop(colour='b', co_ords=board.squares['f8']['co_ordinates'], board=board))
+        piece_set.append(Rook(colour='b', co_ords=board.squares['a8']['co_ordinates'], board=board))
+        piece_set.append(Rook(colour='b', co_ords=board.squares['h8']['co_ordinates'], board=board))
+        piece_set.append(Queen(colour='b', co_ords=board.squares['d8']['co_ordinates'], board=board))
+        piece_set.append(King(colour='b', co_ords=board.squares['e8']['co_ordinates'], board=board))
+
+    return piece_set
