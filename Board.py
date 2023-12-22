@@ -66,6 +66,7 @@ class Board:
             p += 1
             if (p % 8) - 1 == 0:
                 n += 1
+        self.reversed = False
         self.squares_reversed = squares_reversed_w
 
     def flip(self):
