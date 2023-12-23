@@ -43,7 +43,8 @@ squares_reversed_b = {'(250, 250)': 'a1', '(175, 250)': 'b1', '(100, 250)': 'c1'
                       '(175, -275)': 'b8', '(100, -275)': 'c8', '(25, -275)': 'd8', '(-50, -275)': 'e8',
                       '(-125, -275)': 'f8', '(-200, -275)': 'g8', '(-275, -275)': 'h8'}
 
-board_colours = ['images/darkseagreen1.gif', 'images/darkslategrey.gif']
+board_colours = ['images/darkslategrey.gif', 'images/darkseagreen1.gif']
+colours = ['darkseagreen1', 'darkslategrey']
 
 translate_matrix = np.array([[1, 0, 12.5], [0, 1, 12.5], [0, 0, 1]])
 rotate_matrix = np.array([[-1, 0, 0], [0, -1, 0], [0, 0, 1]])
@@ -70,6 +71,7 @@ class Board:
         self.reversed = False
         self.squares_reversed = squares_reversed_w
         pen = Turtle()
+        pen.pensize(2)
         pen.penup()
         pen.setpos(self.squares['a8']['co_ordinates'])
         pen.left(90)
@@ -77,12 +79,34 @@ class Board:
         pen.left(90)
         pen.forward(37.5)
         pen.pendown()
-        pen.left(45)
-        pen.forward(30)
-        pen.left(45)
-        pen.forward(75)
-        pen.left(135)
-        pen.forward(30)
+        n = 0
+        for x in range(8):
+            pen.fillcolor(colours[n % 2])
+            pen.begin_fill()
+            pen.left(45)
+            pen.forward(30)
+            pen.left(45)
+            pen.forward(75)
+            pen.left(135)
+            pen.forward(30)
+            pen.left(135)
+            pen.end_fill()
+            n += 1
+        n = 1
+        for x in range(8):
+            pen.fillcolor(colours[n % 2])
+            pen.begin_fill()
+            pen.left(45)
+            pen.forward(30)
+            pen.left(135)
+            pen.forward(75)
+            pen.left(45)
+            pen.forward(30)
+            pen.left(135)
+            pen.end_fill()
+            n += 1
+        pen.hideturtle()
+
 
     def flip(self, white_set, black_set):
 
@@ -104,11 +128,13 @@ class Board:
             piece.setpos(new_co_ordinates)
 
     def update(self, white_set, black_set):
-        self.squares = {}
-        for square in sqrs:
-            x_ord = letters[square[0]] * 75 - 350
-            y_ord = int(square[1]) * 75 - 350
-            self.squares.update({square: {'piece': 'empty', 'co_ordinates': (x_ord, y_ord)}})
+        # self.squares = {}
+        # for square in sqrs:
+        #     x_ord = letters[square[0]] * 75 - 350
+        #     y_ord = int(square[1]) * 75 - 350
+        #     self.squares.update({square: {'piece': 'empty', 'co_ordinates': (x_ord, y_ord)}})
+        for square in self.squares.values():
+            square['piece'] = 'empty'
 
         for piece in white_set + black_set:
             square = self.squares_reversed[f'({piece.xcor()}, {piece.ycor()})']

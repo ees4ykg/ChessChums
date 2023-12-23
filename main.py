@@ -14,6 +14,8 @@ from turtle import Screen, Turtle
 
 screen = Screen()
 
+screen.bgcolor('black')
+
 screen.addshape('images/darkseagreen1.gif')
 screen.addshape('images/darkslategrey.gif')
 
@@ -59,14 +61,17 @@ def spot_clicked(spot, player):
 
     reset_spotlight()
     screen.update()
-    chessboard.flip(white_set, black_set)
-    chessboard.update(white_set, black_set)
+
+
+
     screen.update()
+
     global next_turn
     next_turn = True
 
 
 def player_turn(piece):
+    print(chessboard.squares)
     global selected_piece_index
 
     if current_player == 'white':
@@ -77,7 +82,6 @@ def player_turn(piece):
 
     reset_spotlight()
 
-    chessboard.update(white_set, black_set)
     piece.vision_update(board=chessboard)
 
     for space in piece.vision + piece.capture_vision:
@@ -113,6 +117,9 @@ while True:
     while not next_turn:
         screen.update()
 
+    chessboard.flip(white_set, black_set)
+    chessboard.update(white_set, black_set)
+
     # black's turn:
 
     next_turn = False
@@ -123,5 +130,8 @@ while True:
 
     while not next_turn:
         screen.update()
+
+    chessboard.flip(white_set, black_set)
+    chessboard.update(white_set, black_set)
 
 screen.mainloop()
