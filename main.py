@@ -10,11 +10,29 @@
 import time
 from Board import *
 from pieces import *
-from turtle import Screen, Turtle
+from turtle import Screen, Turtle, setup
 
+
+setup(700, 700)
 screen = Screen()
 
-screen.bgcolor('black')
+screen.screensize(675, 675)
+
+# Set the custom center coordinates
+custom_center_x = (-12.5 + 300) - (35 / 2 ** 0.5 + 600) / 2
+custom_center_y = (-12.5 + 300) - (35 / 2 ** 0.5 + 600) / 2
+
+# Calculate the range for setworldcoordinates
+left_bound = custom_center_x - screen.window_width() // 2
+right_bound = custom_center_x + screen.window_width() // 2
+bottom_bound = custom_center_y - screen.window_height() // 2
+top_bound = custom_center_y + screen.window_height() // 2
+
+# Set the world coordinates with the custom center
+screen.setworldcoordinates(left_bound, bottom_bound, right_bound, top_bound)
+
+
+screen.bgcolor('grey')
 
 screen.addshape('images/darkseagreen1.gif')
 screen.addshape('images/darkslategrey.gif')
@@ -71,7 +89,7 @@ def spot_clicked(spot, player):
 
 
 def player_turn(piece):
-    print(chessboard.squares)
+
     global selected_piece_index
 
     if current_player == 'white':
@@ -100,6 +118,7 @@ def player_turn(piece):
 screen.tracer(0, 0)
 
 chessboard = Board()
+
 
 white_set = create_piece_set(chessboard, 'w')
 black_set = create_piece_set(chessboard, 'b')

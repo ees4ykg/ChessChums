@@ -63,7 +63,6 @@ class Board:
             self.squares.update({square: {'piece': 'empty', 'co_ordinates': (x_ord, y_ord)}})
             t = Turtle(shape=board_colours[(p + n) % 2])
             t.penup()
-            t.speed(9999999)
             t.setpos(x_ord, y_ord)
             p += 1
             if (p % 8) - 1 == 0:
@@ -71,7 +70,7 @@ class Board:
         self.reversed = False
         self.squares_reversed = squares_reversed_w
         pen = Turtle()
-        pen.pensize(2)
+        pen.pensize(3)
         pen.penup()
         pen.setpos(self.squares['a8']['co_ordinates'])
         pen.left(90)
@@ -79,6 +78,9 @@ class Board:
         pen.left(90)
         pen.forward(37.5)
         pen.pendown()
+        for x in range(4):
+            pen.left(90)
+            pen.forward(600)
         n = 0
         for x in range(8):
             pen.fillcolor(colours[n % 2])
