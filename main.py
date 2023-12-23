@@ -38,6 +38,7 @@ screen.addshape('images/darkseagreen1.gif')
 screen.addshape('images/darkslategrey.gif')
 screen.addshape("images/cross.gif")
 screen.addshape("images/greycross.gif")
+screen.addshape("images/greycircle.gif")
 
 parts = ['king', 'queen', 'rook', 'bishop', 'knight', 'pawn']
 for part in parts:
@@ -105,7 +106,7 @@ def player_turn(piece):
     piece.vision_update(board=chessboard)
 
     for space in piece.vision + piece.capture_vision:
-        t = Turtle(shape='images/greycross.gif')
+        t = Turtle(shape='images/greycircle.gif')
         t.penup()
         t.shapesize(2.5)
         t.setpos(space)
