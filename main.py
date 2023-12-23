@@ -12,7 +12,6 @@ from Board import *
 from pieces import *
 from turtle import Screen, Turtle
 
-
 screen = Screen()
 
 screen.addshape('images/darkseagreen1.gif')
@@ -23,16 +22,62 @@ for part in parts:
     screen.addshape(f'images/b_{part}_1x_ns.gif')
     screen.addshape(f'images/w_{part}_1x_ns.gif')
 
-
 spotlight = []
 
 
-def display_options(piece):
-
+def reset_spotlight():
     for t in spotlight:
         t.hideturtle()
     spotlight.clear()
 
+
+selected_piece_index = None
+
+
+def spot_clicked(spot, player):
+    if player == 'white':
+        white_set[selected_piece_index].setpos(spot.xcor(), spot.ycor())
+        white_set[selected_piece_index].has_moved = True
+
+        for piece in black_set:
+            piece.onclick(None)
+            if spot.pos() == piece.pos():
+                piece.hideturtle()
+                black_set.remove(piece)
+                break
+
+    elif player == 'black':
+        black_set[selected_piece_index].setpos(spot.xcor(), spot.ycor())
+        black_set[selected_piece_index].has_moved = True
+
+        for piece in white_set:
+            piece.onclick(None)
+            if spot.pos() == piece.pos():
+                piece.hideturtle()
+                white_set.remove(piece)
+                break
+
+    reset_spotlight()
+    screen.update()
+    chessboard.flip(white_set, black_set)
+    chessboard.update(white_set, black_set)
+    screen.update()
+    global next_turn
+    next_turn = True
+
+
+def player_turn(piece):
+    global selected_piece_index
+
+    if current_player == 'white':
+        selected_piece_index = (white_set.index(piece))
+
+    elif current_player == 'black':
+        selected_piece_index = (black_set.index(piece))
+
+    reset_spotlight()
+
+    chessboard.update(white_set, black_set)
     piece.vision_update(board=chessboard)
 
     for space in piece.vision + piece.capture_vision:
@@ -44,6 +89,8 @@ def display_options(piece):
         spotlight.append(t)
 
     screen.update()
+    for spot in spotlight:
+        spot.onclick(lambda x, y, s=spot, p=current_player: spot_clicked(s, p))
 
 
 screen.tracer(0, 0)
@@ -53,16 +100,28 @@ chessboard = Board()
 white_set = create_piece_set(chessboard, 'w')
 black_set = create_piece_set(chessboard, 'b')
 
-
-
 screen.update()
 
-# w_rook1.onclick(lambda x, y: display_options(w_rook1))
-# w_pawn1.onclick(lambda x, y: display_options(w_pawn1))
-# w_bishop1.onclick(lambda x, y: display_options(w_bishop1))
-# w_queen.onclick(lambda x, y: display_options(w_queen))
-# w_knight1.onclick(lambda x, y: display_options(w_knight1))
-# w_king.onclick(lambda x, y: display_options(w_king))
+while True:
+    # white's turn:
+    next_turn = False
+    current_player = 'white'
 
-screen.update()
+    for piece in white_set:
+        piece.onclick(lambda x, y, p=piece: player_turn(p))
+
+    while not next_turn:
+        screen.update()
+
+    # black's turn:
+
+    next_turn = False
+    current_player = 'black'
+
+    for piece in black_set:
+        piece.onclick(lambda x, y, p=piece: player_turn(p))
+
+    while not next_turn:
+        screen.update()
+
 screen.mainloop()

@@ -15,12 +15,16 @@ def set_square_piece(board, colour, co_ords, name):
 def initialise_piece(self, colour, co_ords, name):
     self.penup()
     self.colour = colour
-    if self.colour == 'w':
+
+    if colour == 'w':
         self.opposite_colour = 'b'
-    elif self.colour == 'b':
+    elif colour == 'b':
         self.opposite_colour = 'w'
+
     self.shape(f"images/{colour}_{name}_1x_ns.gif")
     self.setpos(co_ords)
+    self.has_moved = False
+    self.name = name
 
 
 def vision_update_loop(self, board, directions, infinity): # Used for vision_update in rook, bishop and queen class
@@ -63,37 +67,54 @@ class Pawn(Turtle):
 
         self.vision = []
         self.capture_vision = []
-        self.has_moved = False
 
         set_square_piece(board, colour, co_ords, "pawn")
 
+    # def vision_update(self, board):
+    #
+    #     self.vision = []
+    #     blocked = True
+    #
+    #     for square in board.squares.values():
+    #         if square['co_ordinates'] == (self.xcor(), self.ycor() + 75) and square['piece'] == 'empty':
+    #             self.vision.append((self.xcor(), self.ycor() + 75))
+    #             blocked = False
+    #
+    #     for square in board.squares.values():
+    #         if not self.has_moved and not blocked and square['co_ordinates'] == (self.xcor(), self.ycor() + 150):
+    #             if square['piece'] == 'empty':  # adds second square to vision array if pawn has not moved yet
+    #                 self.vision.append((self.xcor(), self.ycor() + 150))
+    #
+    #     self.capture_vision = []
+    #
+    #     for square in board.squares.values():
+    #         if square['co_ordinates'] == (self.xcor() - 75, self.ycor() + 75):
+    #             for part in parts:  # adds square to capture_vision array if enemy piece is present on that square
+    #                 if square['piece'] == f'{self.opposite_colour}_{part}':
+    #                     self.capture_vision.append((self.xcor() - 75, self.ycor() + 75))
+    #
+    #         elif square['co_ordinates'] == (self.xcor() + 75, self.ycor() + 75):
+    #             for part in parts:  # adds square to capture_vision array if enemy piece is present on that square
+    #                 if square['piece'] == f'{self.opposite_colour}_{part}':
+    #                     self.capture_vision.append((self.xcor() + 75, self.ycor() + 75))
     def vision_update(self, board):
-
-        self.vision = []
-        blocked = True
-
-        for square in board.squares.values():
-            if square['co_ordinates'] == (self.xcor(), self.ycor() + 75) and square['piece'] == 'empty':
-                self.vision.append((self.xcor(), self.ycor() + 75))
-                blocked = False
-
-        for square in board.squares.values():
-            if not self.has_moved and not blocked and square['co_ordinates'] == (self.xcor(), self.ycor() + 150):
-                if square['piece'] == 'empty':  # adds second square to vision array if pawn has not moved yet
-                    self.vision.append((self.xcor(), self.ycor() + 150))
-
         self.capture_vision = []
+        self.vision = []
 
-        for square in board.squares.values():
-            if square['co_ordinates'] == (self.xcor() - 75, self.ycor() + 75):
-                for part in parts:  # adds square to capture_vision array if enemy piece is present on that square
-                    if square['piece'] == f'{self.opposite_colour}_{part}':
-                        self.capture_vision.append((self.xcor() - 75, self.ycor() + 75))
+        square = board.squares_reversed[f'({self.xcor() + 75}, {self.ycor() + 75})']
+        if board.squares[square]['piece'] in [f'{self.opposite_colour}_{part}' for part in parts]:
+            self.capture_vision.append(board.squares[square]['co_ordinates'])
 
-            elif square['co_ordinates'] == (self.xcor() + 75, self.ycor() + 75):
-                for part in parts:  # adds square to capture_vision array if enemy piece is present on that square
-                    if square['piece'] == f'{self.opposite_colour}_{part}':
-                        self.capture_vision.append((self.xcor() + 75, self.ycor() + 75))
+        square = board.squares_reversed[f'({self.xcor() - 75}, {self.ycor() + 75})']
+        if board.squares[square]['piece'] in [f'{self.opposite_colour}_{part}' for part in parts]:
+            self.capture_vision.append(board.squares[square]['co_ordinates'])
+
+        square = board.squares_reversed[f'({self.xcor()}, {self.ycor() + 75})']
+
+        if board.squares[square]['piece'] == 'empty':
+            self.vision.append(board.squares[square]['co_ordinates'])
+
+
 
 
 class Rook(Turtle):
