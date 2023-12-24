@@ -1,5 +1,8 @@
 from turtle import Turtle
 import numpy as np
+import os
+
+script_directory = os.path.dirname(os.path.abspath(__file__))
 
 letters = {'a': 1, 'b': 2, 'c': 3, 'd': 4, 'e': 5, 'f': 6, 'g': 7, 'h': 8}
 sqrs = ['a1', 'b1', 'c1', 'd1', 'e1', 'f1', 'g1', 'h1', 'a2', 'b2', 'c2', 'd2', 'e2', 'f2', 'g2', 'h2', 'a3', 'b3',
@@ -43,7 +46,8 @@ squares_reversed_b = {'(250, 250)': 'a1', '(175, 250)': 'b1', '(100, 250)': 'c1'
                       '(175, -275)': 'b8', '(100, -275)': 'c8', '(25, -275)': 'd8', '(-50, -275)': 'e8',
                       '(-125, -275)': 'f8', '(-200, -275)': 'g8', '(-275, -275)': 'h8'}
 
-board_colours = ['images/darkslategrey.gif', 'images/darkseagreen1.gif']
+board_colours = [os.path.join(script_directory, 'images/darkseagreen1.gif'),
+                 os.path.join(script_directory, 'images/darkslategrey.gif')]
 colours = ['darkseagreen1', 'darkslategrey']
 
 translate_matrix = np.array([[1, 0, 12.5], [0, 1, 12.5], [0, 0, 1]])

@@ -11,6 +11,15 @@ import time
 from Board import *
 from pieces import *
 from turtle import Screen, Turtle, setup
+import turtle
+import tkinter
+import os
+
+script_directory = os.path.dirname(os.path.abspath(__file__))
+
+turtle.title('ChessChums')
+img = tkinter.Image("photo", file=os.path.join(script_directory, "images/b_knight_1x_ns.gif"))
+turtle._Screen._root.iconphoto(True, img)
 
 
 setup(700, 700)
@@ -34,16 +43,16 @@ screen.setworldcoordinates(left_bound, bottom_bound, right_bound, top_bound)
 
 screen.bgcolor('grey')
 
-screen.addshape('images/darkseagreen1.gif')
-screen.addshape('images/darkslategrey.gif')
-screen.addshape("images/cross.gif")
-screen.addshape("images/greycross.gif")
-screen.addshape("images/greycircle.gif")
+screen.addshape(os.path.join(script_directory, 'images/darkseagreen1.gif'))
+screen.addshape(os.path.join(script_directory, 'images/darkslategrey.gif'))
+screen.addshape(os.path.join(script_directory, "images/cross.gif"))
+screen.addshape(os.path.join(script_directory, "images/greycross.gif"))
+screen.addshape(os.path.join(script_directory, 'images/greycircle.gif'))
 
 parts = ['king', 'queen', 'rook', 'bishop', 'knight', 'pawn']
 for part in parts:
-    screen.addshape(f'images/b_{part}_1x_ns.gif')
-    screen.addshape(f'images/w_{part}_1x_ns.gif')
+    screen.addshape(os.path.join(script_directory, f'images/b_{part}_1x_ns.gif'))
+    screen.addshape(os.path.join(script_directory, f'images/w_{part}_1x_ns.gif'))
 
 spotlight = []
 
@@ -106,7 +115,7 @@ def player_turn(piece):
     piece.vision_update(board=chessboard)
 
     for space in piece.vision + piece.capture_vision:
-        t = Turtle(shape='images/greycircle.gif')
+        t = Turtle(shape=os.path.join(script_directory, 'images/greycircle.gif'))
         t.penup()
         t.shapesize(2.5)
         t.setpos(space)

@@ -1,5 +1,8 @@
 import ftplib
 from turtle import Turtle
+import os
+
+script_directory = os.path.dirname(os.path.abspath(__file__))
 
 parts = ['king', 'queen', 'rook', 'bishop', 'knight', 'pawn']
 letters = {'a': 1, 'b': 2, 'c': 3, 'd': 4, 'e': 5, 'f': 6, 'g': 7, 'h': 8}
@@ -21,7 +24,7 @@ def initialise_piece(self, colour, co_ords, name):
     elif colour == 'b':
         self.opposite_colour = 'w'
 
-    self.shape(f"images/{colour}_{name}_1x_ns.gif")
+    self.shape(os.path.join(script_directory, f'images/{colour}_{name}_1x_ns.gif'))
     self.setpos(co_ords)
     self.has_moved = False
     self.name = name
