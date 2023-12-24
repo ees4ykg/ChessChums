@@ -113,8 +113,7 @@ class Board:
             n += 1
         pen.hideturtle()
 
-
-    def flip(self, white_set, black_set):
+    def flip(self, white_set, black_set, highlighter):
 
         for square in self.squares.values():
             co_ordinates_matrix = np.matrix([[square['co_ordinates'][0]], [square['co_ordinates'][1]], [1]])
@@ -127,7 +126,7 @@ class Board:
         elif self.squares_reversed == squares_reversed_b:
             self.squares_reversed = squares_reversed_w
 
-        for piece in white_set + black_set:
+        for piece in white_set + black_set + highlighter:
             co_ordinates_matrix = np.matrix([[piece.xcor()], [piece.ycor()], [1]])
             new_co_ordinates_matrix = matrix_transformation.dot(co_ordinates_matrix)
             new_co_ordinates = (int(new_co_ordinates_matrix[0][0]), int(new_co_ordinates_matrix[1][0]))

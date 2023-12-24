@@ -48,6 +48,7 @@ screen.addshape(os.path.join(script_directory, 'images/darkslategrey.gif'))
 screen.addshape(os.path.join(script_directory, "images/cross.gif"))
 screen.addshape(os.path.join(script_directory, "images/greycross.gif"))
 screen.addshape(os.path.join(script_directory, 'images/greycircle.gif'))
+screen.addshape(os.path.join(script_directory, 'images/highlighter.gif'))
 
 parts = ['king', 'queen', 'rook', 'bishop', 'knight', 'pawn']
 for part in parts:
@@ -55,6 +56,7 @@ for part in parts:
     screen.addshape(os.path.join(script_directory, f'images/w_{part}_1x_ns.gif'))
 
 spotlight = []
+highlighter = []
 
 
 def reset_spotlight():
@@ -62,6 +64,17 @@ def reset_spotlight():
         t.hideturtle()
     spotlight.clear()
 
+
+def reset_highlighter():
+    for t in highlighter:
+        t.hideturtle()
+    highlighter.clear()
+
+
+def reset_lights(x, y):
+    reset_highlighter()
+    reset_spotlight()
+    screen.update()
 
 selected_piece_index = None
 
@@ -90,6 +103,12 @@ def spot_clicked(spot, player):
                 break
 
     reset_spotlight()
+
+    h = Turtle(shape=os.path.join(script_directory, 'images/highlighter.gif'))
+    h.penup()
+    h.setpos(spot.xcor(), spot.ycor())
+    highlighter.append(h)
+
     screen.update()
 
 
@@ -100,8 +119,7 @@ def spot_clicked(spot, player):
     next_turn = True
 
 
-def player_turn(piece):
-
+def piece_clicked(piece):
     global selected_piece_index
 
     if current_player == 'white':
@@ -111,6 +129,14 @@ def player_turn(piece):
         selected_piece_index = (black_set.index(piece))
 
     reset_spotlight()
+    reset_highlighter()
+
+    h = Turtle(shape=os.path.join(script_directory, 'images/highlighter.gif'))
+    h.penup()
+    h.setpos(piece.xcor(), piece.ycor())
+    highlighter.append(h)
+    for h in highlighter:
+        h.onclick(fun=reset_lights)
 
     piece.vision_update(board=chessboard)
 
@@ -142,12 +168,12 @@ while True:
     current_player = 'white'
 
     for piece in white_set:
-        piece.onclick(lambda x, y, p=piece: player_turn(p))
+        piece.onclick(lambda x, y, p=piece: piece_clicked(p))
 
     while not next_turn:
         screen.update()
 
-    chessboard.flip(white_set, black_set)
+    chessboard.flip(white_set, black_set, highlighter)
     chessboard.update(white_set, black_set)
 
     # black's turn:
@@ -156,12 +182,12 @@ while True:
     current_player = 'black'
 
     for piece in black_set:
-        piece.onclick(lambda x, y, p=piece: player_turn(p))
+        piece.onclick(lambda x, y, p=piece: piece_clicked(p))
 
     while not next_turn:
         screen.update()
 
-    chessboard.flip(white_set, black_set)
+    chessboard.flip(white_set, black_set, highlighter)
     chessboard.update(white_set, black_set)
 
 screen.mainloop()
