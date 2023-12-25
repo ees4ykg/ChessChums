@@ -8,8 +8,9 @@
 
 # bismillah allahu akbar
 import time
-from Board import *
+from board import *
 from pieces import *
+from rules import *
 from turtle import Screen, Turtle, setup
 import turtle
 import tkinter
@@ -111,10 +112,6 @@ def spot_clicked(spot, player):
 
     screen.update()
 
-
-
-    screen.update()
-
     global next_turn
     next_turn = True
 
@@ -141,11 +138,17 @@ def piece_clicked(piece):
     piece.vision_update(board=chessboard)
 
     for space in piece.vision + piece.capture_vision:
-        t = Turtle(shape=os.path.join(script_directory, 'images/greycircle.gif'))
-        t.penup()
-        t.shapesize(2.5)
-        t.setpos(space)
-        spotlight.append(t)
+
+        if {'piece': tuple(piece.pos()), 'spot': tuple(space)} in illegal_moves:
+            pass
+
+        else:
+
+            t = Turtle(shape=os.path.join(script_directory, 'images/greycircle.gif'))
+            t.penup()
+            t.shapesize(2.5)
+            t.setpos(space)
+            spotlight.append(t)
 
     screen.update()
     for spot in spotlight:
@@ -154,18 +157,24 @@ def piece_clicked(piece):
 
 screen.tracer(0, 0)
 
-chessboard = Board()
+chessboard = Board(draw=True)
 
 
 white_set = create_piece_set(chessboard, 'w')
 black_set = create_piece_set(chessboard, 'b')
 
+
+
 screen.update()
 
 while True:
     # white's turn:
+
     next_turn = False
     current_player = 'white'
+    illegal_moves = find_illegal_moves(white_set, black_set, chessboard)
+    if in_check(chessboard, white_set, black_set):
+        print('CHECK')
 
     for piece in white_set:
         piece.onclick(lambda x, y, p=piece: piece_clicked(p))
@@ -180,6 +189,10 @@ while True:
 
     next_turn = False
     current_player = 'black'
+    illegal_moves = find_illegal_moves(black_set, white_set, chessboard)
+    if in_check(chessboard, white_set, black_set):
+        print('CHECK')
+    screen.update()
 
     for piece in black_set:
         piece.onclick(lambda x, y, p=piece: piece_clicked(p))

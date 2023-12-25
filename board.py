@@ -57,7 +57,7 @@ matrix_transformation = translate_inverse_matrix.dot(rotate_matrix.dot(translate
 
 
 class Board:
-    def __init__(self):
+    def __init__(self, draw):
         p = 1
         n = 0
         self.squares = {}
@@ -65,53 +65,55 @@ class Board:
             x_ord = letters[square[0]] * 75 - 350
             y_ord = int(square[1]) * 75 - 350
             self.squares.update({square: {'piece': 'empty', 'co_ordinates': (x_ord, y_ord)}})
-            t = Turtle(shape=board_colours[(p + n) % 2])
-            t.penup()
-            t.setpos(x_ord, y_ord)
-            p += 1
-            if (p % 8) - 1 == 0:
-                n += 1
+            if draw:
+                t = Turtle(shape=board_colours[(p + n) % 2])
+                t.penup()
+                t.setpos(x_ord, y_ord)
+                p += 1
+                if (p % 8) - 1 == 0:
+                    n += 1
         self.reversed = False
         self.squares_reversed = squares_reversed_w
-        pen = Turtle()
-        pen.pensize(3)
-        pen.penup()
-        pen.setpos(self.squares['a8']['co_ordinates'])
-        pen.left(90)
-        pen.forward(37.5)
-        pen.left(90)
-        pen.forward(37.5)
-        pen.pendown()
-        for x in range(4):
+        if draw:
+            pen = Turtle()
+            pen.pensize(3)
+            pen.penup()
+            pen.setpos(self.squares['a8']['co_ordinates'])
             pen.left(90)
-            pen.forward(600)
-        n = 0
-        for x in range(8):
-            pen.fillcolor(colours[n % 2])
-            pen.begin_fill()
-            pen.left(45)
-            pen.forward(30)
-            pen.left(45)
-            pen.forward(75)
-            pen.left(135)
-            pen.forward(30)
-            pen.left(135)
-            pen.end_fill()
-            n += 1
-        n = 1
-        for x in range(8):
-            pen.fillcolor(colours[n % 2])
-            pen.begin_fill()
-            pen.left(45)
-            pen.forward(30)
-            pen.left(135)
-            pen.forward(75)
-            pen.left(45)
-            pen.forward(30)
-            pen.left(135)
-            pen.end_fill()
-            n += 1
-        pen.hideturtle()
+            pen.forward(37.5)
+            pen.left(90)
+            pen.forward(37.5)
+            pen.pendown()
+            for x in range(4):
+                pen.left(90)
+                pen.forward(600)
+            n = 0
+            for x in range(8):
+                pen.fillcolor(colours[n % 2])
+                pen.begin_fill()
+                pen.left(45)
+                pen.forward(30)
+                pen.left(45)
+                pen.forward(75)
+                pen.left(135)
+                pen.forward(30)
+                pen.left(135)
+                pen.end_fill()
+                n += 1
+            n = 1
+            for x in range(8):
+                pen.fillcolor(colours[n % 2])
+                pen.begin_fill()
+                pen.left(45)
+                pen.forward(30)
+                pen.left(135)
+                pen.forward(75)
+                pen.left(45)
+                pen.forward(30)
+                pen.left(135)
+                pen.end_fill()
+                n += 1
+            pen.hideturtle()
 
     def flip(self, white_set, black_set, highlighter):
 
@@ -132,12 +134,10 @@ class Board:
             new_co_ordinates = (int(new_co_ordinates_matrix[0][0]), int(new_co_ordinates_matrix[1][0]))
             piece.setpos(new_co_ordinates)
 
+        self.reversed = not self.reversed
+
     def update(self, white_set, black_set):
-        # self.squares = {}
-        # for square in sqrs:
-        #     x_ord = letters[square[0]] * 75 - 350
-        #     y_ord = int(square[1]) * 75 - 350
-        #     self.squares.update({square: {'piece': 'empty', 'co_ordinates': (x_ord, y_ord)}})
+
         for square in self.squares.values():
             square['piece'] = 'empty'
 
