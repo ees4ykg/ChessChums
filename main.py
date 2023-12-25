@@ -19,7 +19,7 @@ import os
 script_directory = os.path.dirname(os.path.abspath(__file__))
 
 turtle.title('ChessChums')
-img = tkinter.Image("photo", file=os.path.join(script_directory, "images/b_knight_1x_ns.gif"))
+img = tkinter.Image("photo", file=os.path.join(script_directory, "images/icon.gif"))
 turtle._Screen._root.iconphoto(True, img)
 
 
