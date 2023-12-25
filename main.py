@@ -23,10 +23,10 @@ img = tkinter.Image("photo", file=os.path.join(script_directory, "images/icon.gi
 turtle._Screen._root.iconphoto(True, img)
 
 
-setup(700, 700)
+setup(700, 900)
 screen = Screen()
 
-screen.screensize(675, 675)
+screen.screensize(700, 800)
 
 # Set the custom center coordinates
 custom_center_x = (-12.5 + 300) - (35 / 2 ** 0.5 + 600) / 2
@@ -85,6 +85,10 @@ def spot_clicked(spot, player):
         white_set[selected_piece_index].setpos(spot.xcor(), spot.ycor())
         white_set[selected_piece_index].has_moved = True
 
+        promotion(white_set[selected_piece_index], white_set, chessboard, screen)
+
+
+
         for piece in black_set:
             piece.onclick(None)
             if spot.pos() == piece.pos():
@@ -95,6 +99,9 @@ def spot_clicked(spot, player):
     elif player == 'black':
         black_set[selected_piece_index].setpos(spot.xcor(), spot.ycor())
         black_set[selected_piece_index].has_moved = True
+
+        promotion(black_set[selected_piece_index], black_set, chessboard, screen)
+
 
         for piece in white_set:
             piece.onclick(None)
@@ -162,7 +169,6 @@ chessboard = Board(draw=True)
 
 white_set = create_piece_set(chessboard, 'w')
 black_set = create_piece_set(chessboard, 'b')
-
 
 
 screen.update()

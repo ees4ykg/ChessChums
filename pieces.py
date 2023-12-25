@@ -199,7 +199,8 @@ def create_piece_set(board, colour):
 
     if colour == 'w':
         for letter in letters.keys():
-            piece_set.append(Pawn(colour="w", co_ords=board.squares[letter + "2"]["co_ordinates"], board=board, has_moved=False))
+            piece_set.append(
+                Pawn(colour="w", co_ords=board.squares[letter + "2"]["co_ordinates"], board=board, has_moved=False))
 
         piece_set.append(Knight(colour='w', co_ords=board.squares['b1']['co_ordinates'], board=board, has_moved=False))
         piece_set.append(Knight(colour='w', co_ords=board.squares['g1']['co_ordinates'], board=board, has_moved=False))
@@ -212,7 +213,8 @@ def create_piece_set(board, colour):
 
     elif colour == 'b':
         for letter in letters.keys():
-            piece_set.append(Pawn(colour="b", co_ords=board.squares[letter + "7"]["co_ordinates"], board=board, has_moved=False))
+            piece_set.append(
+                Pawn(colour="b", co_ords=board.squares[letter + "7"]["co_ordinates"], board=board, has_moved=False))
 
         piece_set.append(Knight(colour='b', co_ords=board.squares['b8']['co_ordinates'], board=board, has_moved=False))
         piece_set.append(Knight(colour='b', co_ords=board.squares['g8']['co_ordinates'], board=board, has_moved=False))
@@ -224,3 +226,4 @@ def create_piece_set(board, colour):
         piece_set.append(King(colour='b', co_ords=board.squares['e8']['co_ordinates'], board=board, has_moved=False))
 
     return piece_set
+
