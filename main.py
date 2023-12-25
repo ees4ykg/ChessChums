@@ -81,13 +81,10 @@ selected_piece_index = None
 
 
 def spot_clicked(spot, player):
+    reset_spotlight()
     if player == 'white':
         white_set[selected_piece_index].setpos(spot.xcor(), spot.ycor())
         white_set[selected_piece_index].has_moved = True
-
-        promotion(white_set[selected_piece_index], white_set, chessboard, screen)
-
-
 
         for piece in black_set:
             piece.onclick(None)
@@ -96,12 +93,11 @@ def spot_clicked(spot, player):
                 black_set.remove(piece)
                 break
 
+        promotion(white_set[selected_piece_index], white_set, chessboard, screen)
+
     elif player == 'black':
         black_set[selected_piece_index].setpos(spot.xcor(), spot.ycor())
         black_set[selected_piece_index].has_moved = True
-
-        promotion(black_set[selected_piece_index], black_set, chessboard, screen)
-
 
         for piece in white_set:
             piece.onclick(None)
@@ -110,7 +106,7 @@ def spot_clicked(spot, player):
                 white_set.remove(piece)
                 break
 
-    reset_spotlight()
+        promotion(black_set[selected_piece_index], black_set, chessboard, screen)
 
     h = Turtle(shape=os.path.join(script_directory, 'images/highlighter.gif'))
     h.penup()

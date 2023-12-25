@@ -45,6 +45,7 @@ def create_virtual_set(set):
             virtual_set.append(Queen(piece.colour, piece.pos(), virtual_board, piece.has_moved))
     for t in virtual_set:
         t.shape('circle')
+        t.hideturtle()
     return virtual_set
 
 
