@@ -93,6 +93,7 @@ def spot_clicked(spot, player):
             if spot.pos() == piece.pos():
                 piece.hideturtle()
                 black_set.remove(piece)
+                winsound.PlaySound("thud", winsound.SND_FILENAME)
                 break
 
         promotion(white_set[selected_piece_index], white_set, chessboard, screen)
@@ -106,6 +107,7 @@ def spot_clicked(spot, player):
             if spot.pos() == piece.pos():
                 piece.hideturtle()
                 white_set.remove(piece)
+                winsound.PlaySound("thud", winsound.SND_FILENAME)
                 break
 
         promotion(black_set[selected_piece_index], black_set, chessboard, screen)
