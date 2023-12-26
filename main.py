@@ -15,6 +15,7 @@ from turtle import Screen, Turtle, setup
 import turtle
 import tkinter
 import os
+import winsound
 
 script_directory = os.path.dirname(os.path.abspath(__file__))
 
@@ -82,6 +83,7 @@ selected_piece_index = None
 
 def spot_clicked(spot, player):
     reset_spotlight()
+    
     if player == 'white':
         white_set[selected_piece_index].setpos(spot.xcor(), spot.ycor())
         white_set[selected_piece_index].has_moved = True
@@ -113,8 +115,9 @@ def spot_clicked(spot, player):
     h.setpos(spot.xcor(), spot.ycor())
     highlighter.append(h)
 
+    
     screen.update()
-
+    winsound.PlaySound("click", winsound.SND_FILENAME)
     global next_turn
     next_turn = True
 
