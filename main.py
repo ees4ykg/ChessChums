@@ -22,7 +22,6 @@ turtle.title('ChessChums')
 img = tkinter.Image("photo", file=os.path.join(script_directory, "images/icon.gif"))
 turtle._Screen._root.iconphoto(True, img)
 
-
 setup(700, 900)
 screen = Screen()
 
@@ -41,7 +40,6 @@ top_bound = custom_center_y + screen.window_height() // 2
 # Set the world coordinates with the custom center
 screen.setworldcoordinates(left_bound, bottom_bound, right_bound, top_bound)
 
-
 screen.bgcolor('grey')
 
 screen.addshape(os.path.join(script_directory, 'images/darkseagreen1.gif'))
@@ -50,6 +48,7 @@ screen.addshape(os.path.join(script_directory, "images/cross.gif"))
 screen.addshape(os.path.join(script_directory, "images/greycross.gif"))
 screen.addshape(os.path.join(script_directory, 'images/greycircle.gif'))
 screen.addshape(os.path.join(script_directory, 'images/highlighter.gif'))
+screen.addshape(os.path.join(script_directory, 'images/checkmate.gif'))
 
 parts = ['king', 'queen', 'rook', 'bishop', 'knight', 'pawn']
 for part in parts:
@@ -76,6 +75,7 @@ def reset_lights(x, y):
     reset_highlighter()
     reset_spotlight()
     screen.update()
+
 
 selected_piece_index = None
 
@@ -147,7 +147,7 @@ def piece_clicked(piece):
 
         else:
 
-            t = Turtle(shape=os.path.join(script_directory, 'images/greycircle.gif'))
+            t = Turtle(os.path.join(script_directory, 'images/greycircle.gif'))
             t.penup()
             t.shapesize(2.5)
             t.setpos(space)
@@ -162,10 +162,8 @@ screen.tracer(0, 0)
 
 chessboard = Board(draw=True)
 
-
 white_set = create_piece_set(chessboard, 'w')
 black_set = create_piece_set(chessboard, 'b')
-
 
 screen.update()
 
@@ -175,6 +173,11 @@ while True:
     next_turn = False
     current_player = 'white'
     illegal_moves = find_illegal_moves(white_set, black_set, chessboard)
+
+    if len(all_moves(white_set, chessboard)) == len(illegal_moves):
+        winner = 'black'
+        break
+
     if in_check(chessboard, white_set, black_set):
         print('CHECK')
 
@@ -192,6 +195,11 @@ while True:
     next_turn = False
     current_player = 'black'
     illegal_moves = find_illegal_moves(black_set, white_set, chessboard)
+
+    if len(all_moves(black_set, chessboard)) == len(illegal_moves):
+        winner = 'white'
+        break
+
     if in_check(chessboard, white_set, black_set):
         print('CHECK')
     screen.update()
@@ -205,4 +213,10 @@ while True:
     chessboard.flip(white_set, black_set, highlighter)
     chessboard.update(white_set, black_set)
 
+print(f'CHECKMATE by {winner}')
+image = Turtle(shape=os.path.join(script_directory, 'images/checkmate.gif'))
+image.penup()
+image.setpos(-12.5, -12.5)
+chessboard.flip(white_set, black_set, highlighter)
+screen.update()
 screen.mainloop()

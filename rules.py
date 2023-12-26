@@ -140,3 +140,13 @@ def promotion(piece, player_set, board, screen):
             s.hideturtle()
         piece.hideturtle()
         player_set.remove(piece)
+
+
+def all_moves(player, board):
+    moves = []
+    for piece in player:
+        piece.vision_update(board)
+        for space in piece.vision + piece.capture_vision:
+            moves.append(space)
+
+    return moves
