@@ -197,6 +197,7 @@ def show_castling(king, player, board):
 
 def reset_castling_spotlight(castling_spotlight):
     for spot in castling_spotlight:
+        spot.onclick(None)
         spot.hideturtle()
     castling_spotlight.clear()
 

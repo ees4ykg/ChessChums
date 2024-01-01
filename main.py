@@ -64,12 +64,14 @@ castling_spotlight = []
 
 def reset_spotlight():
     for t in spotlight:
+        t.onclick(None)
         t.hideturtle()
     spotlight.clear()
 
 
 def reset_highlighter():
     for t in highlighter:
+        t.onclick(None)
         t.hideturtle()
     highlighter.clear()
 
@@ -77,6 +79,7 @@ def reset_highlighter():
 def reset_castling_spotlight(castling_spotlight):
     for spot in castling_spotlight:
         spot.hideturtle()
+        spot.onclick(None)
     castling_spotlight.clear()
 
 def reset_lights(x, y):
@@ -91,6 +94,7 @@ selected_piece_index = None
 
 def spot_clicked(spot, player):
     reset_spotlight()
+    reset_castling_spotlight(castling_spotlight)
 
     if player == 'white':
         white_set[selected_piece_index].setpos(spot.xcor(), spot.ycor())
@@ -233,13 +237,13 @@ while True:
     illegal_moves = find_illegal_moves(black_set, white_set, chessboard)
 
     if len(all_moves(black_set, chessboard)) == len(illegal_moves):
-        if in_check(chessboard, white_set, black_set):
+        if in_check(chessboard, black_set, white_set):
             winner = 'white'
         else:
             winner = 'draw'
         break
 
-    if in_check(chessboard, white_set, black_set):
+    if in_check(chessboard, black_set, white_set):
         print('CHECK')
     screen.update()
 
