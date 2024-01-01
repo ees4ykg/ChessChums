@@ -48,6 +48,7 @@ screen.addshape(os.path.join(script_directory, 'images/darkslategrey.gif'))
 screen.addshape(os.path.join(script_directory, "images/cross.gif"))
 screen.addshape(os.path.join(script_directory, "images/greycross.gif"))
 screen.addshape(os.path.join(script_directory, 'images/greycircle.gif'))
+screen.addshape(os.path.join(script_directory, 'images/redcircle.gif'))
 screen.addshape(os.path.join(script_directory, 'images/highlighter.gif'))
 screen.addshape(os.path.join(script_directory, 'images/checkmate.gif'))
 
@@ -58,6 +59,7 @@ for part in parts:
 
 spotlight = []
 highlighter = []
+castling_spotlight = []
 
 
 def reset_spotlight():
@@ -72,9 +74,15 @@ def reset_highlighter():
     highlighter.clear()
 
 
+def reset_castling_spotlight(castling_spotlight):
+    for spot in castling_spotlight:
+        spot.hideturtle()
+    castling_spotlight.clear()
+
 def reset_lights(x, y):
     reset_highlighter()
     reset_spotlight()
+    reset_castling_spotlight(castling_spotlight)
     screen.update()
 
 
@@ -83,7 +91,7 @@ selected_piece_index = None
 
 def spot_clicked(spot, player):
     reset_spotlight()
-    
+
     if player == 'white':
         white_set[selected_piece_index].setpos(spot.xcor(), spot.ycor())
         white_set[selected_piece_index].has_moved = True
@@ -93,7 +101,7 @@ def spot_clicked(spot, player):
             if spot.pos() == piece.pos():
                 piece.hideturtle()
                 black_set.remove(piece)
-                winsound.PlaySound("thud", winsound.SND_FILENAME)
+                # winsound.PlaySound("thud", winsound.SND_FILENAME)
                 break
 
         promotion(white_set[selected_piece_index], white_set, chessboard, screen)
@@ -107,7 +115,7 @@ def spot_clicked(spot, player):
             if spot.pos() == piece.pos():
                 piece.hideturtle()
                 white_set.remove(piece)
-                winsound.PlaySound("thud", winsound.SND_FILENAME)
+                # winsound.PlaySound("thud", winsound.SND_FILENAME)
                 break
 
         promotion(black_set[selected_piece_index], black_set, chessboard, screen)
@@ -117,11 +125,9 @@ def spot_clicked(spot, player):
     h.setpos(spot.xcor(), spot.ycor())
     highlighter.append(h)
 
-    
     screen.update()
-    winsound.PlaySound("click", winsound.SND_FILENAME)
-    global next_turn
-    next_turn = True
+    # winsound.PlaySound("click", winsound.SND_FILENAME)
+    next_turn[0] = True
 
 
 def piece_clicked(piece):
@@ -133,8 +139,7 @@ def piece_clicked(piece):
     elif current_player == 'black':
         selected_piece_index = (black_set.index(piece))
 
-    reset_spotlight()
-    reset_highlighter()
+    reset_lights(0, 0)
 
     h = Turtle(shape=os.path.join(script_directory, 'images/highlighter.gif'))
     h.penup()
@@ -145,13 +150,27 @@ def piece_clicked(piece):
 
     piece.vision_update(board=chessboard)
 
-    for space in piece.vision + piece.capture_vision:
+    castling_spaces = []
+
+    if piece.name == 'king' and current_player == 'white':
+        castling_spaces = show_castling(piece, white_set, chessboard)
+
+    elif piece.name == 'king' and current_player == 'black':
+        castling_spaces = show_castling(piece, black_set, chessboard)
+
+    for space in piece.vision + piece.capture_vision + castling_spaces:
 
         if {'piece': tuple(piece.pos()), 'spot': tuple(space)} in illegal_moves:
             pass
 
-        else:
+        elif space in castling_spaces:
+            t = Turtle(os.path.join(script_directory, 'images/redcircle.gif'))
+            t.penup()
+            t.shapesize(2.5)
+            t.setpos(space)
+            castling_spotlight.append(t)
 
+        else:
             t = Turtle(os.path.join(script_directory, 'images/greycircle.gif'))
             t.penup()
             t.shapesize(2.5)
@@ -162,6 +181,9 @@ def piece_clicked(piece):
     for spot in spotlight:
         spot.onclick(lambda x, y, s=spot, p=current_player: spot_clicked(s, p))
 
+    global next_turn
+    for spot in castling_spotlight:
+        spot.onclick(lambda x, y, s=spot, p=current_player: castling_spot_clicked(s, p, white_set, black_set, reset_spotlight, castling_spotlight, next_turn, screen, highlighter))
 
 screen.tracer(0, 0)
 
@@ -172,15 +194,20 @@ black_set = create_piece_set(chessboard, 'b')
 
 screen.update()
 
+next_turn = []
+
 while True:
     # white's turn:
 
-    next_turn = False
+    next_turn = [False]
     current_player = 'white'
     illegal_moves = find_illegal_moves(white_set, black_set, chessboard)
 
     if len(all_moves(white_set, chessboard)) == len(illegal_moves):
-        winner = 'black'
+        if in_check(chessboard, white_set, black_set):
+            winner = 'black'
+        else:
+            winner = 'draw'
         break
 
     if in_check(chessboard, white_set, black_set):
@@ -189,20 +216,27 @@ while True:
     for piece in white_set:
         piece.onclick(lambda x, y, p=piece: piece_clicked(p))
 
-    while not next_turn:
+    while not next_turn[0]:
         screen.update()
 
+    screen.update()
     chessboard.flip(white_set, black_set, highlighter)
     chessboard.update(white_set, black_set)
 
+    for piece in white_set:
+        piece.onclick(None)
+
     # black's turn:
 
-    next_turn = False
+    next_turn = [False]
     current_player = 'black'
     illegal_moves = find_illegal_moves(black_set, white_set, chessboard)
 
     if len(all_moves(black_set, chessboard)) == len(illegal_moves):
-        winner = 'white'
+        if in_check(chessboard, white_set, black_set):
+            winner = 'white'
+        else:
+            winner = 'draw'
         break
 
     if in_check(chessboard, white_set, black_set):
@@ -212,11 +246,14 @@ while True:
     for piece in black_set:
         piece.onclick(lambda x, y, p=piece: piece_clicked(p))
 
-    while not next_turn:
+    while not next_turn[0]:
         screen.update()
 
     chessboard.flip(white_set, black_set, highlighter)
     chessboard.update(white_set, black_set)
+
+    for piece in black_set:
+        piece.onclick(None)
 
 print(f'CHECKMATE by {winner}')
 image = Turtle(shape=os.path.join(script_directory, 'images/checkmate.gif'))

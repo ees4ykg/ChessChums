@@ -4,6 +4,7 @@ from pieces import *
 from turtle import Turtle
 import os
 
+
 script_directory = os.path.dirname(os.path.abspath(__file__))
 
 
@@ -150,3 +151,83 @@ def all_moves(player, board):
             moves.append(space)
 
     return moves
+
+
+def show_castling(king, player, board):
+    special_spaces = []
+
+    if player[0].colour == 'b':
+
+        if not king.has_moved and board.squares['h8']['piece'] == 'b_rook':
+            for piece in player:
+                if tuple(piece.pos()) == (-275, -275) and not piece.has_moved:
+                    gap_squares = ['f8', 'g8']
+                    gap_pieces = [board.squares[s]['piece'] for s in gap_squares]
+                    if gap_pieces == ['empty', 'empty']:
+                        special_spaces.append((-200, -275))
+
+        if not king.has_moved and board.squares['a8']['piece'] == 'b_rook':
+            for piece in player:
+                if tuple(piece.pos()) == (250, -275) and not piece.has_moved:
+                    gap_squares = ['b8', 'c8', 'd8']
+                    gap_pieces = [board.squares[s]['piece'] for s in gap_squares]
+                    if gap_pieces == ['empty', 'empty', 'empty']:
+                        special_spaces.append((100, -275))
+
+    elif player[0].colour == 'w':
+
+        if not king.has_moved and board.squares['a1']['piece'] == 'w_rook':
+            for piece in player:
+                if tuple(piece.pos()) == (-275, -275) and not piece.has_moved:
+                    gap_squares = ['b1', 'c1', 'd1']
+                    gap_pieces = [board.squares[s]['piece'] for s in gap_squares]
+                    if gap_pieces == ['empty', 'empty', 'empty']:
+                        special_spaces.append((-125, -275))
+
+        if not king.has_moved and board.squares['h1']['piece'] == 'w_rook':
+            for piece in player:
+                if tuple(piece.pos()) == (250, -275) and not piece.has_moved:
+                    gap_squares = ['f1', 'g1']
+                    gap_pieces = [board.squares[s]['piece'] for s in gap_squares]
+                    if gap_pieces == ['empty', 'empty']:
+                        special_spaces.append((175, -275))
+
+    return special_spaces
+
+
+def reset_castling_spotlight(castling_spotlight):
+    for spot in castling_spotlight:
+        spot.hideturtle()
+    castling_spotlight.clear()
+
+
+def castling_spot_clicked(spot, player, white_set, black_set, reset_spotlight, castling_spotlight, next_turn, screen, highlighter):
+    reset_spotlight()
+    reset_castling_spotlight(castling_spotlight)
+
+    if player == 'white':
+        pieces = white_set
+    elif player == 'black':
+        pieces = black_set
+
+    for piece in pieces:
+        if spot.xcor() <= -125 and piece.name == 'king':
+            piece.setpos(spot.pos())
+            king_new_x = piece.xcor()
+        elif spot.xcor() >= 100 and piece.name == 'king':
+            piece.setpos(spot.pos())
+            king_new_x = piece.xcor()
+
+    for piece in pieces:
+        if spot.xcor() <= -125 and tuple(piece.pos()) == (-275, -275):
+            piece.setpos(king_new_x + 75, -275)
+        elif spot.xcor() >= 100 and tuple(piece.pos()) == (250, -275):
+            piece.setpos(king_new_x - 75, -275)
+
+    h = Turtle(shape=os.path.join(script_directory, 'images/highlighter.gif'))
+    h.penup()
+    h.setpos(spot.xcor(), spot.ycor())
+    highlighter.append(h)
+
+    screen.update()
+    next_turn[0] = True
